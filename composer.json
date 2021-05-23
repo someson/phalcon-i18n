@@ -1,0 +1,40 @@
+{
+    "name": "phalcon/i18n",
+    "description": "Multi-lingual support (extended)",
+    "license": "MIT",
+    "keywords": ["phalcon", "i18n", "translate"],
+    "type": "library",
+    "version": "2.7.1",
+    "require": {
+        "php": ">=7.1",
+        "ext-json": "*",
+        "ext-phalcon": ">=3.2 <4.0"
+    },
+    "require-dev": {
+        "codeception/codeception": "^4.1",
+        "codeception/module-asserts": "^1.3",
+        "codeception/module-phalcon": "^1.1",
+        "phalcon/ide-stubs": "^3.4",
+        "phpstan/phpstan": "^0.12"
+    },
+    "authors": [
+        {
+            "name": "someson",
+            "email": "somevov4ik@gmail.com"
+        }
+    ],
+    "suggest": {
+        "ext-pdo": "*",
+        "ext-yaml": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Phalcon\\I18n\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Phalcon\\Tests\\Unit\\": "tests/unit/"
+        }
+    }
+}

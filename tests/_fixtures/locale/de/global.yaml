@@ -1,0 +1,10 @@
+a1: "Test Übersetzung 1"
+a2: "Test Übersetzung mit einem Parameter: {{p1}}"
+a3: "Test Übersetzung mit 2 Parametern: {{p1}} und {{p2}}"
+a4:
+  b1: "Test Übersetzung level 2"
+  b2:
+    c1: "Test Übersetzung level 3"
+a5: "Beispiel (Singular)"
+a5_plural: "{{count}} Beispiele (Plural)"
+a6_context: "mit context"
