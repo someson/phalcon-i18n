@@ -1,10 +1,10 @@
 {
-    "name": "phalcon/i18n",
+    "name": "someson/phalcon-i18n",
     "description": "Multi-lingual support (extended)",
     "license": "MIT",
     "keywords": ["phalcon", "i18n", "translate"],
     "type": "library",
-    "version": "2.7.1",
+    "version": "1.0",
     "require": {
         "php": ">=7.1",
         "ext-json": "*",
