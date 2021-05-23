@@ -14,7 +14,6 @@ class Files implements FileLoaderInterface
     public static function load(string $adapterClass, string $dir): Collection
     {
         $output = [];
-        /** @var DirectoryIterator $file */
         foreach (new DirectoryIterator($dir) as $file) {
             if ($file->isFile()) {
                 $ext = $file->getExtension();

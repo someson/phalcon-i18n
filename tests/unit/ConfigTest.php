@@ -10,7 +10,7 @@ class ConfigTest extends Unit
     /** @var \UnitTester */
     protected $tester;
 
-    public function testMustBeFunctionableWithConfigService(): void
+    public function testMustBeFunctionalWithConfigService(): void
     {
         $path = FIXTURES . DIRECTORY_SEPARATOR .'locale';
         $this->tester->addServiceToContainer('config', new \Phalcon\Config([
