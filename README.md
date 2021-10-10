@@ -41,12 +41,12 @@ return [
     ],
 
     // bool only
-    'collectMissedTranslations' => true,
+    'collectMissingTranslations' => true,
 
     // - false
     // - sprintf pattern e.g. [# %s #]
     // - \Phalcon\I18n\Interfaces\DecoratorInterface object
-    'decorateMissedTranslations' => new \Phalcon\I18n\Decorator\HtmlCode,
+    'decorateMissingTranslations' => new \Phalcon\I18n\Decorator\HtmlCode,
 ];
 ```
 you may want to override it with your own config (by default used in `config` container having `i18n` scope):
@@ -61,8 +61,8 @@ return [
         'interpolator' => [
             'arguments' => ['[[', ']]'],
         ],
-        'collectMissedTranslations' => false,
-        'decorateMissedTranslations' => '[# %s #]',
+        'collectMissingTranslations' => false,
+        'decorateMissingTranslations' => '[# %s #]',
     ],
 
     // ...
@@ -155,7 +155,7 @@ Unit Tests (27) ----------------------------------------------------------
 + TranslatorTest: Check if translation exists (0.01s)
 + TranslatorTest: Plural (0.01s)
 + TranslatorTest: Context (0.01s)
-+ TranslatorTest: Missed translations (0.01s)
++ TranslatorTest: Missing translations (0.01s)
 + TranslatorTest: Simple translation without parameters (0.01s)
 + TranslatorTest: Simple translation with parameters (0.01s)
 + TranslatorTest: Translation with deeper level (0.01s)

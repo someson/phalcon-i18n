@@ -27,7 +27,7 @@ class DecoratorTest extends Unit
 
     public function testNoDecoration(): void
     {
-        $this->translator->getConfig()->offsetSet('decorateMissedTranslations', false);
+        $this->translator->getConfig()->offsetSet('decorateMissingTranslations', false);
         $this->translator->setLang('de');
 
         $key = 'NOT_EXISTING_KEY';
@@ -38,7 +38,7 @@ class DecoratorTest extends Unit
     public function testDecorateAsTextPattern(): void
     {
         $pattern = '[# %s #]';
-        $this->translator->getConfig()->offsetSet('decorateMissedTranslations', $pattern);
+        $this->translator->getConfig()->offsetSet('decorateMissingTranslations', $pattern);
         $this->translator->setLang('de');
 
         $key = 'NOT_EXISTING_KEY';
@@ -48,7 +48,7 @@ class DecoratorTest extends Unit
 
     public function testDecorateAsHtml(): void
     {
-        $this->translator->getConfig()->offsetSet('decorateMissedTranslations', new \Phalcon\I18n\Decorator\HtmlCode);
+        $this->translator->getConfig()->offsetSet('decorateMissingTranslations', new \Phalcon\I18n\Decorator\HtmlCode);
         $this->translator->setLang('de');
 
         $key = 'NOT_EXISTING_KEY';

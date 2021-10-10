@@ -32,10 +32,10 @@ return [
     ],
 
     // bool only
-    'collectMissedTranslations' => true,
+    'collectMissingTranslations' => true,
 
     // - false
     // - sprintf pattern e.g. [# %s #]
     // - \Phalcon\I18n\Interfaces\DecoratorInterface object
-    'decorateMissedTranslations' => new \Phalcon\I18n\Decorator\HtmlCode,
+    'decorateMissingTranslations' => new \Phalcon\I18n\Decorator\HtmlCode,
 ];

@@ -75,7 +75,7 @@ class TranslatorTest extends Unit
         self::assertFalse($this->translator->exists('global:a99'));
 
         $config = $this->translator->getConfig();
-        $config->offsetSet('decorateMissedTranslations', false);
+        $config->offsetSet('decorateMissingTranslations', false);
         self::assertSame($this->translator->_('a99'), 'a99');
         self::assertSame($this->translator->_('global:a99'), 'a99');
     }
@@ -97,11 +97,11 @@ class TranslatorTest extends Unit
         self::assertSame($t, 'mit context');
     }
 
-    public function testMissedTranslations(): void
+    public function testMissingTranslations(): void
     {
         $key = 'NOT_EXISTING_KEY';
         $t = $this->translator->_($key);
-        self::assertArrayHasKey($key, $this->translator->getMissedTranslations());
+        self::assertArrayHasKey($key, $this->translator->getMissingTranslations());
     }
 
     public function testSimpleTranslationWithoutParameters(): void

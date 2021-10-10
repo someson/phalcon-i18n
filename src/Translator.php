@@ -27,7 +27,7 @@ final class Translator
     private $_translations;
 
     /** @var array */
-    private $_missedTranslations;
+    private $_missingTranslations;
 
     private function __clone() {}
     private function __construct()
@@ -55,7 +55,7 @@ final class Translator
         $this->setLang($this->_config->get('defaultLang'));
         $this->setScope($this->_config->get('defaultScope'));
         $this->_translations = null;
-        $this->_missedTranslations = [];
+        $this->_missingTranslations = [];
     }
 
     /**
@@ -100,9 +100,9 @@ final class Translator
         return $this->_config;
     }
 
-    public function getMissedTranslations(): array
+    public function getMissingTranslations(): array
     {
-        return $this->_missedTranslations;
+        return $this->_missingTranslations;
     }
 
     /**
@@ -147,14 +147,14 @@ final class Translator
         $allByLang = $this->_loadTranslations();
         $allByLang->shiftKeys($scope);
         if (! $allByLang->exists($key)) {
-            if ($this->_config->get('collectMissedTranslations', false)) {
-                if (isset($this->_missedTranslations[$key])) {
-                    ++$this->_missedTranslations[$key];
+            if ($this->_config->get('collectMissingTranslations', false)) {
+                if (isset($this->_missingTranslations[$key])) {
+                    ++$this->_missingTranslations[$key];
                 } else {
-                    $this->_missedTranslations[$key] = 1;
+                    $this->_missingTranslations[$key] = 1;
                 }
             }
-            if (! $decorator = $this->_config->get('decorateMissedTranslations', false)) {
+            if (! $decorator = $this->_config->get('decorateMissingTranslations', false)) {
                 return $key;
             }
             if ($decorator instanceof DecoratorInterface) {
