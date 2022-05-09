@@ -18,12 +18,38 @@ class TranslatorTest extends Unit
         parent::_before();
         $this->tester->addServiceToContainer('config', new \Phalcon\Config([
             'i18n' => [
-                'loader' => ['arguments' => ['path' => FIXTURES . DIRECTORY_SEPARATOR .'locale']],
+                'loader' => ['arguments' => ['path' => FIXTURES . DIRECTORY_SEPARATOR . 'locale']],
             ],
         ]), true);
         $this->translator = Translator::instance();
         $this->translator->initialize();
         $this->translator->setLang('de');
+    }
+
+    public function testFallbackLoaded(): void
+    {
+        $this->translator->setLang('fr')->setScope('test');
+
+        self::assertTrue($this->translator->exists('a1'));
+
+        $scope = $this->translator->getScope('test');
+        self::assertIsArray($scope);
+        self::assertArrayHasKey('a1', $scope);
+
+        $reflection = new \ReflectionClass($this->translator);
+        $langProperty = $reflection->getProperty('_lang');
+        $langProperty->setAccessible(true);
+        self::assertSame($langProperty->getValue($this->translator), 'en');
+    }
+
+    public function testWrongFallbackLangDefined(): void
+    {
+        $this->translator->initialize(['defaultLang' => 'zz']);
+        $this->translator->setLang('fr')->setScope('test');
+
+        $this->tester->expectThrowable(\Phalcon\Translate\Exception::class, function() {
+            $this->translator->exists('a1');
+        });
     }
 
     public function testDefaultInstance(): void

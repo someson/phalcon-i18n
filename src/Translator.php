@@ -5,6 +5,7 @@ namespace Phalcon\I18n;
 use Phalcon\Config;
 use Phalcon\Di;
 use Phalcon\I18n\Interfaces\DecoratorInterface;
+use Phalcon\Translate\Exception as TException;
 use ReflectionClass;
 use ReflectionException;
 use function call_user_func_array;
@@ -81,7 +82,7 @@ final class Translator
     /**
      * @param string $name
      * @return array
-     * @throws ReflectionException
+     * @throws ReflectionException|TException
      */
     public function getScope(string $name): array
     {
@@ -108,7 +109,7 @@ final class Translator
     /**
      * @param string $key 'scope:a.b.c'
      * @return bool
-     * @throws ReflectionException
+     * @throws ReflectionException|TException
      */
     public function exists(string $key): bool
     {
@@ -127,7 +128,7 @@ final class Translator
      * @param array $params
      * @param bool $pluralize
      * @return string
-     * @throws ReflectionException
+     * @throws ReflectionException|TException
      */
     public function _(string $key, array $params = [], bool $pluralize = true): string
     {
@@ -169,7 +170,7 @@ final class Translator
 
     /**
      * @return Handler\NativeArray
-     * @throws ReflectionException
+     * @throws ReflectionException|TException
      */
     public function _loadTranslations(): Handler\NativeArray
     {
@@ -179,11 +180,24 @@ final class Translator
         $loader = $this->_config->path('loader.className');
         $adapter = $this->_config->path('adapter.className');
         $loaderArgs = $this->_config->path('loader.arguments')->toArray();
+        $dirPath = '';
         if (isset($loaderArgs['path'])) {
-            $loaderArgs['path'] = rtrim($loaderArgs['path'], '/\\ ');
-            $loaderArgs['path'] .= DIRECTORY_SEPARATOR . $this->_lang;
+            $dirPath = rtrim($loaderArgs['path'], '/\\ ') . DIRECTORY_SEPARATOR;
+            $loaderArgs['path'] = $dirPath . $this->_lang;
         }
-        $content = call_user_func_array(sprintf('%s::load', $loader), array_merge([$adapter], $loaderArgs));
+        try {
+            $content = call_user_func_array(sprintf('%s::load', $loader), array_merge([$adapter], $loaderArgs));
+        } catch (\UnexpectedValueException $e) {
+            $this->setLang($this->_config->get('defaultLang'));
+            if (isset($loaderArgs['path'])) {
+                $loaderArgs['path'] = $dirPath . $this->_lang;
+            }
+            try {
+                $content = call_user_func_array(sprintf('%s::load', $loader), array_merge([$adapter], $loaderArgs));
+            } catch (\Exception $e) {
+                throw new TException(sprintf('i18n cannot be loaded: %s', $e->getMessage()));
+            }
+        }
         $interpolator = new ReflectionClass($this->_config->path('interpolator.className'));
         $interpolatorArgs = $this->_config->path('interpolator.arguments');
 

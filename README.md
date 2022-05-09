@@ -124,22 +124,22 @@ or in any view:
 To run tests, run the following command:
 
 ```
-$ [winpty] docker-compose exec [fpm] ./vendor/bin/codecept run [unit] [-v[v[v]]] 
+$ [docker-compose exec [fpm]] ./vendor/bin/codecept run [unit] [-v[v[v]] -d] 
 ```
 ```
 $ ./vendor/bin/codecept run --coverage
-Codeception PHP Testing Framework v4.1.20
-Powered by PHPUnit 8.5.15 by Sebastian Bergmann and contributors.
+Codeception PHP Testing Framework v4.1.22
+Powered by PHPUnit 8.5.20 by Sebastian Bergmann and contributors.
 
-Unit Tests (27) ----------------------------------------------------------
-+ AdapterTest: Json found and initialized (0.01s)
-+ AdapterTest: Json may throw exceptions (0.02s)
-+ ConfigTest: Must be functionable with config service (0.01s)
+Unit Tests (29) ----------------------------------------------------------
++ AdapterTest: Json found and initialized (0.03s)
++ AdapterTest: Json may throw exceptions (0.03s)
++ ConfigTest: Must be functional with config service (0.03s)
 + ConfigTest: Must be functionable without config service (0.01s)
 + ConfigTest: Must be functionable with wrong config (0.01s)
-+ DecoratorTest: No decoration (0.01s)
-+ DecoratorTest: Decorate as text pattern (0.01s)
-+ DecoratorTest: Decorate as html (0.01s)
++ DecoratorTest: No decoration (0.02s)
++ DecoratorTest: Decorate as text pattern (0.02s)
++ DecoratorTest: Decorate as html (0.02s)
 + HandlerTest: Check keys shifting | #0 (0.01s)
 + HandlerTest: Check keys shifting | #1 (0.01s)
 + HandlerTest: Check keys shifting | #2 (0.01s)
@@ -148,29 +148,31 @@ Unit Tests (27) ----------------------------------------------------------
 + LoaderTest: Files loader | #0 (0.01s)
 + LoaderTest: Files loader | #1 (0.01s)
 + LoaderTest: Files loader | #2 (0.01s)
++ TranslatorTest: Fallback loaded (0.02s)
++ TranslatorTest: Wrong fallback lang defined (0.02s)
 + TranslatorTest: Default instance (0.01s)
 + TranslatorTest: Change language (0.01s)
 + TranslatorTest: Change scope (0.01s)
-+ TranslatorTest: Changed scope should return a new collection (0.01s)
-+ TranslatorTest: Check if translation exists (0.01s)
-+ TranslatorTest: Plural (0.01s)
-+ TranslatorTest: Context (0.01s)
-+ TranslatorTest: Missing translations (0.01s)
-+ TranslatorTest: Simple translation without parameters (0.01s)
-+ TranslatorTest: Simple translation with parameters (0.01s)
-+ TranslatorTest: Translation with deeper level (0.01s)
++ TranslatorTest: Changed scope should return a new collection (0.02s)
++ TranslatorTest: Check if translation exists (0.02s)
++ TranslatorTest: Plural (0.02s)
++ TranslatorTest: Context (0.02s)
++ TranslatorTest: Missing translations (0.02s)
++ TranslatorTest: Simple translation without parameters (0.02s)
++ TranslatorTest: Simple translation with parameters (0.02s)
++ TranslatorTest: Translation with deeper level (0.02s)
 --------------------------------------------------------------------------
 
 
-Time: 651 ms, Memory: 14.00 MB
+Time: 1.33 seconds, Memory: 14.00 MB
 
-OK (27 tests, 49 assertions)
+OK (29 tests, 54 assertions)
 
 
 Code Coverage Report Summary:
   Classes: 100.00% (8/8)
   Methods: 100.00% (29/29)
-  Lines:   100.00% (140/140)                                              
+  Lines:   100.00% (148/148)                                              
 ```
 
 For code coverage info run
