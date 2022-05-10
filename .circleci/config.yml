@@ -16,7 +16,7 @@ jobs:
       - checkout
 
       - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
-      - run: sudo docker-php-ext-install zip libpcre3-dev
+      - run: sudo docker-php-ext-install zip
       - run: sudo add-apt-repository ppa:ondrej/php
       - run: sudo apt-get update
       - run: sudo apt-get install php-phalcon
