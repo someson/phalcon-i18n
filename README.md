@@ -4,6 +4,81 @@
 
 Extending [Phalcon Framework v.3.x Translations Module](https://docs.phalcon.io/3.4/en/translate)
 
+## Example
+
+e.g. `login.json` File:
+```json
+{
+    "form": {
+        "label": {
+            "identity": "Benutzername",
+            "password": "Passwort",
+            "rememberMe": "Ich möchte angemeldet bleiben"
+        },
+        "placeholder": {
+            "identity": "Bitte geben Sie ihren Benutzernamen ein",
+            "password": "Bitte geben Sie ihr Passwort ein"
+        },
+        "button": "Anmelden"
+    },
+    "title": {
+        "h1": "Main Title",
+        "h2": "some subtitle"
+    }
+}
+```
+translating path like `login:form.label.identity` returns `Benutzername`
+
+which start with `login:` means file name and the rest of it is a pure json path.
+
+## Usage
+
+### 1. Simple usage
+```php
+// component using a singleton pattern, so we can instantiate it before the framework itself
+// or wrap it into some global function
+$t = \Phalcon\I18n\Translator::instance();
+
+// using the "de" directory, "en" by default
+$t->setLang('de');
+
+// equal to "global:a", hence "global" is a default scope
+echo $t->_('a');
+
+// placeholder "key" replaced through "value"
+echo $t->_('b', ['key' => 'value']);
+
+// nested key
+echo $t->_('c.d.e', ['key' => 'value']);
+
+// nested key from the "api" scope (filename === scope, if files used)
+echo $t->_('api:c.d.e', ['key' => 'value']);
+```
+
+### 2. Advanced usage
+in any bootstrap file (i.e. `index.php`) define:
+```php
+use \Phalcon\I18n\Translator;
+
+if (! function_exists('__')) {
+    function __(string $key, array $params = [], bool $pluralize = true): string {
+        return $key ? Translator::instance()->_($key, $params, $pluralize) : '[TRANSLATION ERROR]';
+    }
+}
+```
+
+inside your code:
+```php
+$translation = __('a.b.c');
+```
+or in any view:
+```html
+<h1><?= __('a.b.c') ?></h1>
+```
+```twig
+<h1>{{ __('a.b.c') }}</h1>
+```
+
 ## Configure
 
 default config `\Phalcon\I18n\Config\Default.php`:
@@ -67,54 +142,6 @@ return [
 
     // ...
 ];
-```
-
-## Usage/Examples
-
-### 1. Simple usage
-```php
-// component using a singleton pattern, so we can instantiate it before the framework itself
-// or wrap it into some global function
-$t = \Phalcon\I18n\Translator::instance();
-
-// using the "de" directory, "en" by default
-$t->setLang('de');
-
-// equal to "global:a", hence "global" is a default scope
-echo $t->_('a');
-
-// placeholder "key" replaced through "value"
-echo $t->_('b', ['key' => 'value']);
-
-// nested key
-echo $t->_('c.d.e', ['key' => 'value']);
-
-// nested key from the "api" scope (filename === scope, if files used)
-echo $t->_('api:c.d.e', ['key' => 'value']);
-```
-
-### 2. Advanced usage
-in any bootstrap file (i.e. `index.php`) define:
-```php
-use \Phalcon\I18n\Translator;
-
-if (! function_exists('__')) {
-    function __(string $key, array $params = [], bool $pluralize = true): string {
-        return $key ? Translator::instance()->_($key, $params, $pluralize) : '[TRANSLATION ERROR]';
-    }
-}
-```
-
-inside your code:
-```php
-$translation = __('a.b.c');
-```
-or in any view:
-```html
-<h1><?= __('a.b.c') ?></h1>
-```
-```twig
-<h1>{{ __('a.b.c') }}</h1>
 ```
 
 ## Running Tests
@@ -181,10 +208,6 @@ $ ./vendor/bin/codecept run --coverage --coverage-html
 ```
 and open `tests/_output/coverage/index.html` in your browser
 
-
-## Static analyzer
+### Static analyzer
 
 `$ ./vendor/bin/phpstan analyse src --level max`
-
-## TODOs
-- caching (APCu, memcache, Redis etc.)

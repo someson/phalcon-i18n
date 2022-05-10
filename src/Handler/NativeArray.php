@@ -17,7 +17,6 @@ class NativeArray extends PhalconNativeArray implements HandlerInterface
     protected $_flatSeparator;
 
     /**
-     * NativeArray constructor.
      * @param array $options
      *
      * shift => 0, // ['a.b.c.d' => 'translation value']
@@ -104,7 +103,6 @@ class NativeArray extends PhalconNativeArray implements HandlerInterface
                 if ($this->_shiftLevel > $shiftLevel) {
                     $output[$keyChain] = $this->_flatten($value, '', $shiftLevel + 1);
                 } else {
-                    /** @noinspection AdditionOperationOnArraysInspection */
                     $output += $this->_flatten($value, $keyChain, $shiftLevel + 1);
                 }
             } else {

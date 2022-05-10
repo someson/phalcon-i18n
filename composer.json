@@ -4,7 +4,6 @@
     "license": "MIT",
     "keywords": ["phalcon", "i18n", "translate"],
     "type": "library",
-    "version": "1.0",
     "require": {
         "php": ">=7.1",
         "ext-json": "*",
@@ -24,7 +23,6 @@
         }
     ],
     "suggest": {
-        "ext-pdo": "*",
         "ext-yaml": "*"
     },
     "autoload": {
