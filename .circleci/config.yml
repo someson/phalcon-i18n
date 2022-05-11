@@ -13,10 +13,10 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install PHP Extension YAML
+          name: Install PHP Extensions
           command: |
             sudo apt-get update -y
-            sudo apt-get install php7.1-yaml
+            sudo apt-get install php7.1-yaml php7.1-xdebug
 
       - run:
           name: Install Phalcon v3.4.5
@@ -39,7 +39,7 @@ jobs:
           name: Run Codeception tests
           command: |
             ./vendor/bin/codecept build
-            ./vendor/bin/codecept run --coverage --coverage-xml --coverage-html
+            ./vendor/bin/codecept run --coverage --coverage-xml
             curl -Os https://uploader.codecov.io/latest/linux/codecov
             chmod +x codecov
             ./codecov
