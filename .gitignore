@@ -3,5 +3,6 @@ Thumbs.db
 .project
 .metadata
 .codeintel
+composer.lock
 .idea
 vendor/

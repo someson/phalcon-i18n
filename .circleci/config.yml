@@ -1,15 +1,10 @@
-# See: https://circleci.com/docs/2.0/language-php/
 version: 2
 
-# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
   test:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
       - image: cimg/php:7.1
 
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
       - checkout
       - run:
@@ -21,17 +16,15 @@ jobs:
       - run:
           name: Install Phalcon v3.4.5
           command: sudo apt-get install php7.1-phalcon3
-            # set -xe && curl -LO https://github.com/phalcon/cphalcon/archive/v3.4.5.tar.gz && tar xzf ${PWD}/v3.4.5.tar.gz
-            # sudo -E docker-php-ext-install -j $(getconf _NPROCESSORS_ONLN) ${PWD}/cphalcon-3.4.5/build/php7/64bits
 
       - run: sudo composer selfupdate
       - restore_cache:
           keys:
-            - composer-v1-{{ checksum "composer.lock" }}
+            - composer-v1-{{ checksum "composer.json" }}
             - composer-v1-
       - run: composer install -n --no-interaction --prefer-source
       - save_cache:
-          key: composer-v1-{{ checksum "composer.lock" }}
+          key: composer-v1-{{ checksum "composer.json" }}
           paths:
             - ./vendor
 
