@@ -7,18 +7,18 @@ jobs:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
-      - image: cimg/php:7.1.33
+      - image: cimg/php:7.1
 
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
       - checkout
-      - run:
-          name: Install PHP Extensions
-          command: |
-            sudo apt-get update
-            sudo -E docker-php-ext-install zip
-            sudo apt-get install -y libyaml-dev
-            sudo pecl install yaml && echo "extension=yaml.so" > /usr/local/etc/php/conf.d/ext-yaml.ini && sudo -E docker-php-ext-enable yaml
+#      - run:
+#          name: Install PHP Extensions
+#          command: |
+
+      - run: sudo apt-get update -y
+      - run: sudo apt-get install -y libyaml-dev
+      - run: sudo pecl install yaml && echo "extension=yaml.so" > /usr/local/etc/php/conf.d/ext-yaml.ini && sudo -E docker-php-ext-enable yaml
 
       - run:
           name: Install Phalcon v3.4.5
