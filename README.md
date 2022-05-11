@@ -1,6 +1,8 @@
 # Multi-lingual Support
 
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://choosealicense.com/licenses/mit/)
+[![CircleCI](https://circleci.com/gh/someson/phalcon-i18n/tree/circleci-project-setup.svg?style=shield)](https://circleci.com/gh/someson/phalcon-i18n/tree/circleci-project-setup)
+[![codecov](https://codecov.io/gh/someson/phalcon-i18n/branch/circleci-project-setup/graph/badge.svg?token=AW5T4WU56Q)](https://codecov.io/gh/someson/phalcon-i18n)
 
 Extending [Phalcon Framework v.3.x Translations Module](https://docs.phalcon.io/3.4/en/translate)
 
