@@ -16,15 +16,15 @@ jobs:
           name: Install PHP Extensions
           command: |
             sudo apt-get update
-            sudo docker-php-ext-install zip
+            sudo -E docker-php-ext-install zip
             sudo apt-get install -y libyaml-dev
-            sudo pecl install yaml && echo "extension=yaml.so" > /usr/local/etc/php/conf.d/ext-yaml.ini && docker-php-ext-enable yaml
+            sudo pecl install yaml && echo "extension=yaml.so" > /usr/local/etc/php/conf.d/ext-yaml.ini && sudo -E docker-php-ext-enable yaml
 
       - run:
           name: Install Phalcon v3.4.5
           command: |
             set -xe && curl -LO https://github.com/phalcon/cphalcon/archive/v3.4.5.tar.gz && tar xzf ${PWD}/v3.4.5.tar.gz
-            sudo docker-php-ext-install -j $(getconf _NPROCESSORS_ONLN) ${PWD}/cphalcon-3.4.5/build/php7/64bits
+            sudo -E docker-php-ext-install -j $(getconf _NPROCESSORS_ONLN) ${PWD}/cphalcon-3.4.5/build/php7/64bits
 
       - run: sudo composer selfupdate
       - restore_cache:
