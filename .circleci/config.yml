@@ -1,40 +1,51 @@
-# PHP CircleCI 2.0 configuration file
 # See: https://circleci.com/docs/2.0/language-php/
 version: 2
 
-# Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  build:
+  test:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
-      - image: circleci/php:7.1.33-cli
+      - image: cimg/php:7.1
 
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
       - checkout
+      - run:
+          name: Install PHP Extensions
+          command: |
+            sudo apt-get update -y
+            sudo apt-get install php7.1-yaml php7.1-xdebug
 
-      - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
-      - run: sudo docker-php-ext-install zip
-      # - run: sudo apt-get install software-properties-common
-      - run: set -xe && curl -LO https://github.com/phalcon/cphalcon/archive/v3.4.5.tar.gz && tar xzf ${PWD}/v3.4.5.tar.gz
-      - run: sudo docker-php-ext-install -j $(getconf _NPROCESSORS_ONLN) ${PWD}/cphalcon-3.4.5/build/php7/64bits
+      - run:
+          name: Install Phalcon v3.4.5
+          command: sudo apt-get install php7.1-phalcon3
+            # set -xe && curl -LO https://github.com/phalcon/cphalcon/archive/v3.4.5.tar.gz && tar xzf ${PWD}/v3.4.5.tar.gz
+            # sudo -E docker-php-ext-install -j $(getconf _NPROCESSORS_ONLN) ${PWD}/cphalcon-3.4.5/build/php7/64bits
 
+      - run: sudo composer selfupdate
       - restore_cache:
           keys:
-            # "composer.lock" can be used if it is committed to the repo
-            - v1-dependencies-{{ checksum "composer.json" }}
-
-      - run: composer install -n --no-interaction --prefer-source --dev
-
+            - composer-v1-{{ checksum "composer.lock" }}
+            - composer-v1-
+      - run: composer install -n --no-interaction --prefer-source
       - save_cache:
-          key: v1-dependencies-{{ checksum "composer.json" }}
+          key: composer-v1-{{ checksum "composer.lock" }}
           paths:
             - ./vendor
 
-      - run: ./vendor/bin/codecept build
-      - run: ./vendor/bin/codecept run --coverage --coverage-xml --coverage-html
-      - run: curl -Os https://uploader.codecov.io/latest/linux/codecov
-      - run: chmod +x codecov
-      - run: ./codecov
+      - run:
+          name: Run Codeception tests
+          command: |
+            ./vendor/bin/codecept build
+            ./vendor/bin/codecept run --coverage --coverage-xml
+            curl -Os https://uploader.codecov.io/latest/linux/codecov
+            chmod +x codecov
+            ./codecov
+
+workflows:
+  version: 2
+  workflow:
+    jobs:
+      - test

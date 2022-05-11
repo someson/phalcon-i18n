@@ -4,5 +4,4 @@ Thumbs.db
 .metadata
 .codeintel
 .idea
-composer.lock
 vendor/
