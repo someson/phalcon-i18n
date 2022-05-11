@@ -1,0 +1,40 @@
+# PHP CircleCI 2.0 configuration file
+# See: https://circleci.com/docs/2.0/language-php/
+version: 2
+
+# Define a job to be invoked later in a workflow.
+# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
+jobs:
+  build:
+    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
+    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+    docker:
+      - image: circleci/php:7.1.33-cli
+
+    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+    steps:
+      - checkout
+
+      - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
+      - run: sudo docker-php-ext-install zip
+      # - run: sudo apt-get install software-properties-common
+      - run: set -xe && curl -LO https://github.com/phalcon/cphalcon/archive/v3.4.5.tar.gz && tar xzf ${PWD}/v3.4.5.tar.gz
+      - run: sudo docker-php-ext-install -j $(getconf _NPROCESSORS_ONLN) ${PWD}/cphalcon-3.4.5/build/php7/64bits
+
+      - restore_cache:
+          keys:
+            # "composer.lock" can be used if it is committed to the repo
+            - v1-dependencies-{{ checksum "composer.json" }}
+
+      - run: composer install -n --no-interaction --prefer-source --dev
+
+      - save_cache:
+          key: v1-dependencies-{{ checksum "composer.json" }}
+          paths:
+            - ./vendor
+
+      - run: ./vendor/bin/codecept build
+      - run: ./vendor/bin/codecept run --coverage --coverage-xml --coverage-html
+      - run: curl -Os https://uploader.codecov.io/latest/linux/codecov
+      - run: chmod +x codecov
+      - run: ./codecov
