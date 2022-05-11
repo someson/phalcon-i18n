@@ -20,9 +20,9 @@ jobs:
 
       - run:
           name: Install Phalcon v3.4.5
-          command: |
-            set -xe && curl -LO https://github.com/phalcon/cphalcon/archive/v3.4.5.tar.gz && tar xzf ${PWD}/v3.4.5.tar.gz
-            sudo -E docker-php-ext-install -j $(getconf _NPROCESSORS_ONLN) ${PWD}/cphalcon-3.4.5/build/php7/64bits
+          command: sudo apt-get install php7.1-phalcon3
+            # set -xe && curl -LO https://github.com/phalcon/cphalcon/archive/v3.4.5.tar.gz && tar xzf ${PWD}/v3.4.5.tar.gz
+            # sudo -E docker-php-ext-install -j $(getconf _NPROCESSORS_ONLN) ${PWD}/cphalcon-3.4.5/build/php7/64bits
 
       - run: sudo composer selfupdate
       - restore_cache:
