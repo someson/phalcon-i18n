@@ -12,13 +12,11 @@ jobs:
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
       - checkout
-#      - run:
-#          name: Install PHP Extensions
-#          command: |
-
-      - run: sudo apt-get update -y
-      - run: sudo apt-get install -y libyaml-dev
-      - run: sudo pecl install yaml && echo "extension=yaml.so" > /usr/local/etc/php/conf.d/ext-yaml.ini && sudo -E docker-php-ext-enable yaml
+      - run:
+          name: Install PHP Extension YAML
+          command: |
+            sudo apt-get update -y
+            sudo apt-get install php7.1-yaml
 
       - run:
           name: Install Phalcon v3.4.5
