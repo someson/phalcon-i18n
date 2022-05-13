@@ -12,6 +12,7 @@ jobs:
           command: |
             sudo apt-get update -y
             sudo apt-get install php7.4-psr php7.4-yaml php7.4-xdebug -y
+            sudo pecl install xdebug
 
       - run:
           name: Install Phalcon v4.x
