@@ -13,7 +13,6 @@ jobs:
             sudo apt-get update -y
             sudo apt-get install php7.4-psr php7.4-yaml php7.4-xdebug -y
             sudo pecl install xdebug
-            sudo export XDEBUG_MODE=coverage
 
       - run:
           name: Install Phalcon v4.x
@@ -35,6 +34,8 @@ jobs:
 
       - run:
           name: Run Codeception tests
+          environment:
+            XDEBUG_MODE: coverage
           command: |
             ./vendor/bin/codecept build
             ./vendor/bin/codecept run --coverage --coverage-xml
