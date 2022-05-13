@@ -4,6 +4,6 @@ modules:
     enabled:
         - Asserts
         - \Helper\Unit
-        - Phalcon:
+        - Phalcon4:
               bootstrap: 'tests/config/bootstrap.php'
     step_decorators: ~

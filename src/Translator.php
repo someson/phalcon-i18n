@@ -3,32 +3,27 @@
 namespace Phalcon\I18n;
 
 use Phalcon\Config;
+use Phalcon\Config\ConfigInterface;
 use Phalcon\Di;
 use Phalcon\I18n\Interfaces\DecoratorInterface;
 use Phalcon\Translate\Exception as TException;
+use Phalcon\Translate\Interpolator\InterpolatorInterface;
 use ReflectionClass;
 use ReflectionException;
 use function call_user_func_array;
 
 final class Translator
 {
-    /** @var self */
-    private static $_instance;
-
-    /** @var Config */
-    private $_config;
-
-    /** @var string */
-    private $_lang;
-
-    /** @var string */
-    private $_scope;
+    private static self $_instance;
+    private ConfigInterface $_config;
+    private string $_lang;
+    private string $_scope;
 
     /** @var Handler\NativeArray[]|null */
-    private $_translations;
+    private ?array $_translations;
 
-    /** @var array */
-    private $_missingTranslations;
+    /** @var array<string, int> */
+    private array $_missingTranslations;
 
     private function __clone() {}
     private function __construct()
@@ -38,20 +33,18 @@ final class Translator
 
     public static function instance(): self
     {
-        if (! isset(self::$_instance)) {
-            self::$_instance = new self;
-        }
-        return self::$_instance;
+        return self::$_instance ??= new self;
     }
 
     /**
-     * @param array|null $userConfig
+     * @param array<string, mixed> $userConfig
+     * @return void
      */
-    public function initialize(?array $userConfig = null): void
+    public function initialize(array $userConfig = []): void
     {
         $this->_config = new Config\Adapter\Php('Config/Default.php');
-        if ($newConfig = $userConfig ?? self::_getAppConfig('i18n')) {
-            $this->_config = $this->_config->merge(new Config($newConfig));
+        if ($newConfig = $userConfig ?: self::_getAppConfig('i18n')) {
+            $this->_config = $this->_config->merge($newConfig);
         }
         $this->setLang($this->_config->get('defaultLang'));
         $this->setScope($this->_config->get('defaultScope'));
@@ -60,7 +53,6 @@ final class Translator
     }
 
     /**
-     * @todo make it protected, no sense to set it globally
      * @param string $name
      * @return $this
      */
@@ -71,7 +63,6 @@ final class Translator
     }
 
     /**
-     * @todo remove
      * @return string|null
      */
     public function getScopeName(): ?string
@@ -81,7 +72,7 @@ final class Translator
 
     /**
      * @param string $name
-     * @return array
+     * @return array<string, mixed>
      * @throws ReflectionException|TException
      */
     public function getScope(string $name): array
@@ -96,11 +87,14 @@ final class Translator
         return $this;
     }
 
-    public function getConfig(): Config
+    public function getConfig(): ConfigInterface
     {
         return $this->_config;
     }
 
+    /**
+     * @return array<string, int>
+     */
     public function getMissingTranslations(): array
     {
         return $this->_missingTranslations;
@@ -125,7 +119,7 @@ final class Translator
 
     /**
      * @param string $key 'scope:a.b.c'
-     * @param array $params
+     * @param array<string, mixed> $params
      * @param bool $pluralize
      * @return string
      * @throws ReflectionException|TException
@@ -198,18 +192,20 @@ final class Translator
                 throw new TException(sprintf('i18n cannot be loaded: %s', $e->getMessage()));
             }
         }
-        $interpolator = new ReflectionClass($this->_config->path('interpolator.className'));
+        $interpolatorObj = new ReflectionClass($this->_config->path('interpolator.className'));
         $interpolatorArgs = $this->_config->path('interpolator.arguments');
+        $handlerOptions = $this->_config->path('handler.options');
 
-        return $this->_translations[$this->_lang] = new Handler\NativeArray(array_merge([
-            'content' => $content->toArray(),
-            'interpolator' => $interpolator->newInstanceArgs($interpolatorArgs->toArray()),
-        ], $this->_config->path('handler.options')->toArray()));
+        /** @var InterpolatorInterface $interpolator */
+        $interpolator = $interpolatorObj->newInstanceArgs($interpolatorArgs->toArray());
+        return $this->_translations[$this->_lang] = new Handler\NativeArray($interpolator, array_merge(
+            ['content' => $content->toArray()], $handlerOptions ? $handlerOptions->toArray() : []
+        ));
     }
 
     /**
      * @param string $path 'i18n'
-     * @return array
+     * @return array<string, mixed>
      */
     protected static function _getAppConfig(string $path): array
     {

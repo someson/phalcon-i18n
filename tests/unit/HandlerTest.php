@@ -24,9 +24,8 @@ class HandlerTest extends Unit
      */
     public function testCheckKeysShifting(int $shiftLevel, array $shiftKeys, string $tKey): void
     {
-        $handler = new NativeArray([
+        $handler = new NativeArray(new AssocArray('{{', '}}'), [
             'content' => Files::load(Json::class, FIXTURES . '/locale/de')->toArray(),
-            'interpolator' => new AssocArray('{{', '}}'),
             'flatten' => ['shift' => $shiftLevel],
         ]);
         if ($shiftLevel > 0) {

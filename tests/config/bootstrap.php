@@ -5,4 +5,4 @@ defined('FIXTURES') || define('FIXTURES', BASE_DIR . DIRECTORY_SEPARATOR . 'test
 $_SERVER['DOCUMENT_ROOT'] = BASE_DIR;
 
 require_once BASE_DIR . '/vendor/autoload.php';
-return new \Phalcon\Mvc\Application(new \Phalcon\DI\FactoryDefault());
+return new \Phalcon\Mvc\Application(new \Phalcon\Di\FactoryDefault());

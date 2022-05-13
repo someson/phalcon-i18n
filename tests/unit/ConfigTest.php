@@ -7,12 +7,11 @@ use Phalcon\I18n\Translator;
 
 class ConfigTest extends Unit
 {
-    /** @var \UnitTester */
-    protected $tester;
+    protected \UnitTester $tester;
 
     public function testMustBeFunctionalWithConfigService(): void
     {
-        $path = FIXTURES . DIRECTORY_SEPARATOR .'locale';
+        $path = FIXTURES . DIRECTORY_SEPARATOR . 'locale';
         $this->tester->addServiceToContainer('config', new \Phalcon\Config([
             'i18n' => [
                 'loader' => ['arguments' => ['path' => $path]],
@@ -29,7 +28,7 @@ class ConfigTest extends Unit
 
     public function testMustBeFunctionableWithoutConfigService(): void
     {
-        $path = FIXTURES . DIRECTORY_SEPARATOR .'locale';
+        $path = FIXTURES . DIRECTORY_SEPARATOR . 'locale';
         $translator = Translator::instance();
         $translator->initialize([
             'loader' => ['arguments' => ['path' => $path]],

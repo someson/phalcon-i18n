@@ -7,8 +7,7 @@ use Phalcon\I18n\Adapter\Json;
 
 class AdapterTest extends Unit
 {
-    /** @var \UnitTester */
-    protected $tester;
+    protected \UnitTester $tester;
 
     public function testJsonFoundAndInitialized(): void
     {
@@ -29,7 +28,7 @@ class AdapterTest extends Unit
         });
 
         $this->tester->comment('Json syntax error:');
-        $this->tester->expectThrowable(new \UnexpectedValueException('Syntax error'), function() {
+        $this->tester->expectThrowable(new \JsonException('Syntax error', \JSON_ERROR_SYNTAX), function() {
             new Json(FIXTURES . '/corrupted/syntax-error.json');
         });
     }

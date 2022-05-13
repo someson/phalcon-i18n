@@ -1,10 +1,10 @@
 # Multi-lingual Support
 
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://choosealicense.com/licenses/mit/)
-[![CircleCI](https://circleci.com/gh/someson/phalcon-i18n/tree/3.4.svg?style=shield)](https://circleci.com/gh/someson/phalcon-i18n/tree/circleci-project-setup)
-[![codecov](https://codecov.io/gh/someson/phalcon-i18n/branch/3.4/graph/badge.svg?token=AW5T4WU56Q)](https://codecov.io/gh/someson/phalcon-i18n)
+[![CircleCI](https://circleci.com/gh/someson/phalcon-i18n/tree/4.1.svg?style=shield)](https://circleci.com/gh/someson/phalcon-i18n/tree/circleci-project-setup)
+[![codecov](https://codecov.io/gh/someson/phalcon-i18n/branch/4.1/graph/badge.svg?token=AW5T4WU56Q)](https://codecov.io/gh/someson/phalcon-i18n)
 
-Extending [Phalcon Framework v.3.x Translations Module](https://docs.phalcon.io/3.4/en/translate)
+Extending [Phalcon Framework v4 Translations Module](https://docs.phalcon.io/4.0/en/translate)
 
 ## Example
 
@@ -153,63 +153,62 @@ return [
 To run tests, run the following command:
 
 ```
-$ [docker-compose exec [fpm]] ./vendor/bin/codecept run [unit] [-v[v[v]] -d] 
+$ docker-compose exec php-service ./vendor/bin/codecept run unit [-vv] 
 ```
 ```
-$ ./vendor/bin/codecept run --coverage
-Codeception PHP Testing Framework v4.1.22
-Powered by PHPUnit 8.5.20 by Sebastian Bergmann and contributors.
+$ docker-compose exec php-service ./vendor/bin/codecept run --coverage 
+Codeception PHP Testing Framework v4.1.33
+Powered by PHPUnit 9.5.20 by Sebastian Bergmann and contributors.
 
 Unit Tests (29) ----------------------------------------------------------
-+ AdapterTest: Json found and initialized (0.03s)
-+ AdapterTest: Json may throw exceptions (0.03s)
-+ ConfigTest: Must be functional with config service (0.03s)
-+ ConfigTest: Must be functionable without config service (0.01s)
-+ ConfigTest: Must be functionable with wrong config (0.01s)
-+ DecoratorTest: No decoration (0.02s)
-+ DecoratorTest: Decorate as text pattern (0.02s)
-+ DecoratorTest: Decorate as html (0.02s)
-+ HandlerTest: Check keys shifting | #0 (0.01s)
-+ HandlerTest: Check keys shifting | #1 (0.01s)
-+ HandlerTest: Check keys shifting | #2 (0.01s)
-+ InterpolatorTest: Should handle default placeholders (0.01s)
-+ InterpolatorTest: Should handle custom placeholders (0.01s)
-+ LoaderTest: Files loader | #0 (0.01s)
-+ LoaderTest: Files loader | #1 (0.01s)
-+ LoaderTest: Files loader | #2 (0.01s)
-+ TranslatorTest: Fallback loaded (0.02s)
-+ TranslatorTest: Wrong fallback lang defined (0.02s)
-+ TranslatorTest: Default instance (0.01s)
-+ TranslatorTest: Change language (0.01s)
-+ TranslatorTest: Change scope (0.01s)
-+ TranslatorTest: Changed scope should return a new collection (0.02s)
-+ TranslatorTest: Check if translation exists (0.02s)
-+ TranslatorTest: Plural (0.02s)
-+ TranslatorTest: Context (0.02s)
-+ TranslatorTest: Missing translations (0.02s)
-+ TranslatorTest: Simple translation without parameters (0.02s)
-+ TranslatorTest: Simple translation with parameters (0.02s)
-+ TranslatorTest: Translation with deeper level (0.02s)
+✔ AdapterTest: Json found and initialized (0.27s)
+✔ AdapterTest: Json may throw exceptions (0.11s)
+✔ ConfigTest: Must be functional with config service (0.12s)
+✔ ConfigTest: Must be functionable without config service (0.02s)
+✔ ConfigTest: Must be functionable with wrong config (0.01s)
+✔ DecoratorTest: No decoration (0.02s)
+✔ DecoratorTest: Decorate as text pattern (0.02s)
+✔ DecoratorTest: Decorate as html (0.02s)
+✔ HandlerTest: Check keys shifting | #0 (0.01s)
+✔ HandlerTest: Check keys shifting | #1 (0.01s)
+✔ HandlerTest: Check keys shifting | #2 (0.02s)
+✔ InterpolatorTest: Should handle default placeholders (0.00s)
+✔ InterpolatorTest: Should handle custom placeholders (0.00s)
+✔ LoaderTest: Files loader | #0 (0.09s)
+✔ LoaderTest: Files loader | #1 (0.02s)
+✔ TranslatorTest: Fallback loaded (0.03s)
+✔ TranslatorTest: Wrong fallback lang defined (0.01s)
+✔ TranslatorTest: Default instance (0.01s)
+✔ TranslatorTest: Change language (0.01s)
+✔ TranslatorTest: Change scope (0.01s)
+✔ TranslatorTest: Changed scope should return a new collection (0.02s)
+✔ TranslatorTest: Check if translation exists (0.03s)
+✔ TranslatorTest: Plural (0.02s)
+✔ TranslatorTest: Context (0.02s)
+✔ TranslatorTest: Missing translations (0.02s)
+✔ TranslatorTest: Simple translation without parameters (0.02s)
+✔ TranslatorTest: Simple translation with parameters (0.02s)
+✔ TranslatorTest: Translation with deeper level (0.02s)
 --------------------------------------------------------------------------
 
 
 Time: 1.33 seconds, Memory: 14.00 MB
 
-OK (29 tests, 54 assertions)
+OK (28 tests, 52 assertions)
 
 
 Code Coverage Report Summary:
-  Classes: 100.00% (8/8)
-  Methods: 100.00% (29/29)
-  Lines:   100.00% (148/148)                                              
+  Classes: 100.00% (6/8)
+  Methods: 100.00% (27/29)
+  Lines:   100.00% (140/148)                                              
 ```
 
 For code coverage info run
 ```
-$ ./vendor/bin/codecept run --coverage --coverage-html
+$ docker-compose exec php-service ./vendor/bin/codecept run --coverage --coverage-html
 ```
 and open `tests/_output/coverage/index.html` in your browser
 
 ### Static analyzer
 
-`$ ./vendor/bin/phpstan analyse src --level max`
+`$ docker-compose exec php-service ./vendor/bin/phpstan analyse src --level max`

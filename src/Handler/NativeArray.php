@@ -3,29 +3,42 @@
 namespace Phalcon\I18n\Handler;
 
 use Phalcon\I18n\Interfaces\HandlerInterface;
-use Phalcon\Translate\Adapter\NativeArray as PhalconNativeArray;
+use Phalcon\Translate\Adapter\AbstractAdapter;
+use Phalcon\Translate\Exception;
+use Phalcon\Translate\Interpolator\InterpolatorInterface;
+use Phalcon\Translate\InterpolatorFactory;
 
-class NativeArray extends PhalconNativeArray implements HandlerInterface
+class NativeArray extends AbstractAdapter implements HandlerInterface
 {
-    /** @var int */
-    protected $_shiftLevel;
+    /** @var array<string, mixed> */
+    protected array $_translate;
+    protected InterpolatorInterface $_interpolator;
 
-    /** @var array */
-    protected $_shiftKeys;
-
-    /** @var string */
-    protected $_flatSeparator;
+    /** @var array<int, string> */
+    protected array $_shiftKeys;
+    protected int $_shiftLevel;
+    protected string $_flatSeparator;
 
     /**
-     * @param array $options
-     *
+     * @param InterpolatorInterface $interpolator
+     * @param array<string, mixed> $options
+     * @throws Exception
      * shift => 0, // ['a.b.c.d' => 'translation value']
      * shift => 1, // ['a' => ['b.c.d' => 'translation value']]
      * shift => 2, // ['a' => ['b' => ['c.d' => 'translation value']]]
      */
-    public function __construct(array $options)
+    public function __construct(InterpolatorInterface $interpolator, array $options)
     {
-        parent::__construct($options);
+        $this->_interpolator = $interpolator;
+
+        // as a fallback in order to use methods of AbstractAdapter. Components of factories almost unextendable :(
+        $interpolatorFactory = new InterpolatorFactory(['defaultInterpolator' => get_class($this->_interpolator)]);
+        parent::__construct($interpolatorFactory, $options);
+
+        if (! isset($options['content'])) {
+            throw new Exception('Translation content was not provided');
+        }
+        $this->_translate = $options['content'];
         $this->_shiftKeys = [];
         if (isset($options['flatten'])) {
             $flatOption = $options['flatten'];
@@ -41,7 +54,7 @@ class NativeArray extends PhalconNativeArray implements HandlerInterface
      * @param string $index
      * @return bool
      */
-    public function exists($index): bool
+    public function exists(string $index): bool
     {
         $found = $this->_translate;
         foreach ($this->_shiftKeys as $key) {
@@ -56,7 +69,7 @@ class NativeArray extends PhalconNativeArray implements HandlerInterface
     /**
      * list of keys ['a'] before actual main key ['b.c.d']
      * must be set if self::_shiftLevel > 0 (multidimensional array)
-     * @param string[] $keys
+     * @param array<int, string> $keys
      */
     public function shiftKeys(...$keys): void
     {
@@ -64,22 +77,22 @@ class NativeArray extends PhalconNativeArray implements HandlerInterface
     }
 
     /**
-     * @param string $index
-     * @param null|array $placeholders
+     * @param string $translateKey
+     * @param array<string, mixed> $placeholders
      * @return string
      */
-    public function query($index, $placeholders = null): string
+    public function query(string $translateKey, array $placeholders = []): string
     {
         $found = $this->_translate;
         foreach ($this->_shiftKeys as $key) {
             $found = $found[$key];
         }
-        return $this->replacePlaceholders($found[$index], $placeholders);
+        return $this->replacePlaceholders($found[$translateKey], $placeholders);
     }
 
     /**
      * @param string $name
-     * @return array
+     * @return array<string, mixed>
      */
     public function getByScope(string $name): array
     {
@@ -87,10 +100,10 @@ class NativeArray extends PhalconNativeArray implements HandlerInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $prefix
      * @param int $shiftLevel
-     * @return array
+     * @return array<string, mixed>
      */
     protected function _flatten(array $data, string $prefix = '', int $shiftLevel = 0): array
     {
@@ -99,7 +112,7 @@ class NativeArray extends PhalconNativeArray implements HandlerInterface
             $keyChain = $this->_shiftLevel > $shiftLevel ?
                 $key : ltrim($prefix . $this->_flatSeparator . $key, $this->_flatSeparator);
 
-            if (is_array($value) || is_object($value)) {
+            if (is_array($value)) {
                 if ($this->_shiftLevel > $shiftLevel) {
                     $output[$keyChain] = $this->_flatten($value, '', $shiftLevel + 1);
                 } else {
@@ -111,4 +124,14 @@ class NativeArray extends PhalconNativeArray implements HandlerInterface
         }
         return $output;
      }
+
+    /**
+     * @param string $translation
+     * @param array<string, mixed> $placeholders
+     * @return string
+     */
+    protected function replacePlaceholders(string $translation, array $placeholders = []): string
+    {
+        return $this->_interpolator->replacePlaceholders($translation, $placeholders);
+    }
 }

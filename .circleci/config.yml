@@ -3,7 +3,7 @@ version: 2
 jobs:
   test:
     docker:
-      - image: cimg/php:7.1
+      - image: cimg/php:7.4
 
     steps:
       - checkout
@@ -11,11 +11,14 @@ jobs:
           name: Install PHP Extensions
           command: |
             sudo apt-get update -y
-            sudo apt-get install php7.1-yaml php7.1-xdebug
+            sudo apt-get install php7.4-yaml php7.4-xdebug
 
       - run:
-          name: Install Phalcon v3.4.5
-          command: sudo apt-get install php7.1-phalcon3
+          name: Install Phalcon v4.x
+          command: |
+            sudo add-apt-repository ppa:ondrej/php -y
+            sudo apt-get update -y
+            sudo apt-get install php7.4-phalcon4
 
       - run: sudo composer selfupdate
       - restore_cache:

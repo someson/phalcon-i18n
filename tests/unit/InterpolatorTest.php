@@ -7,8 +7,7 @@ use Phalcon\I18n\Interpolator\AssocArray;
 
 class InterpolatorTest extends Unit
 {
-    /** @var AssocArray */
-    protected $interpolator;
+    protected AssocArray $interpolator;
 
     protected function _before()
     {

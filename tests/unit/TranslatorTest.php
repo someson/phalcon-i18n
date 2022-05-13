@@ -7,11 +7,8 @@ use Phalcon\I18n\Translator;
 
 class TranslatorTest extends Unit
 {
-    /** @var Translator */
-    protected $translator;
-
-    /** @var \UnitTester */
-    protected $tester;
+    protected Translator $translator;
+    protected \UnitTester $tester;
 
     protected function _before(): void
     {
