@@ -2,14 +2,14 @@
 
 namespace Phalcon\I18n;
 
-use Phalcon\Config;
+use Phalcon\Config\Adapter\Php;
 use Phalcon\Config\ConfigInterface;
-use Phalcon\Di;
+use Phalcon\Config\Exception;
+use Phalcon\Di\Di;
 use Phalcon\I18n\Interfaces\DecoratorInterface;
 use Phalcon\Translate\Exception as TException;
 use Phalcon\Translate\Interpolator\InterpolatorInterface;
-use ReflectionClass;
-use ReflectionException;
+use ReflectionClass, ReflectionException, UnexpectedValueException;
 use function call_user_func_array;
 
 final class Translator
@@ -33,16 +33,20 @@ final class Translator
 
     public static function instance(): self
     {
-        return self::$_instance ??= new self;
+        if (! isset(self::$_instance)) {
+            self::$_instance = new self;
+        }
+        return self::$_instance;
     }
 
     /**
      * @param array<string, mixed> $userConfig
      * @return void
+     * @throws Exception
      */
     public function initialize(array $userConfig = []): void
     {
-        $this->_config = new Config\Adapter\Php('Config/Default.php');
+        $this->_config = new Php('Config/Default.php');
         if ($newConfig = $userConfig ?: self::_getAppConfig('i18n')) {
             $this->_config = $this->_config->merge($newConfig);
         }
@@ -114,7 +118,7 @@ final class Translator
             [$scope, $key] = $parts;
         }
         $allByLang->shiftKeys($scope);
-        return $allByLang->exists($key);
+        return $allByLang->has($key);
     }
 
     /**
@@ -131,17 +135,15 @@ final class Translator
         if (count($parts) > 1) {
             [$scope, $key] = $parts;
         }
-
         if (isset($params['context']) && $params['context']) {
             $key = sprintf('%s_%s', $key, $params['context']);
         }
         if ($pluralize && isset($params['count']) && (int) $params['count'] > 1) {
             $key = sprintf('%s_plural', $key);
         }
-
         $allByLang = $this->_loadTranslations();
         $allByLang->shiftKeys($scope);
-        if (! $allByLang->exists($key)) {
+        if (! $allByLang->has($key)) {
             if ($this->_config->get('collectMissingTranslations', false)) {
                 if (isset($this->_missingTranslations[$key])) {
                     ++$this->_missingTranslations[$key];
@@ -173,21 +175,17 @@ final class Translator
         }
         $loader = $this->_config->path('loader.className');
         $adapter = $this->_config->path('adapter.className');
-        $loaderArgs = $this->_config->path('loader.arguments')->toArray();
-        $dirPath = '';
-        if (isset($loaderArgs['path'])) {
-            $dirPath = rtrim($loaderArgs['path'], '/\\ ') . DIRECTORY_SEPARATOR;
-            $loaderArgs['path'] = $dirPath . $this->_lang;
-        }
+        $loaderArgs = $this->_config->path('loader.arguments')?->toArray();
+
+        $dirPath = isset($loaderArgs['path']) ? rtrim($loaderArgs['path'], '/\\ ') . DIRECTORY_SEPARATOR : '';
+        $loaderArgs['path'] = $dirPath . $this->_lang;
         try {
-            $content = call_user_func_array(sprintf('%s::load', $loader), array_merge([$adapter], $loaderArgs));
-        } catch (\UnexpectedValueException $e) {
+            $content = $loader::load($adapter, $loaderArgs['path']);
+        } catch (UnexpectedValueException) {
             $this->setLang($this->_config->get('defaultLang'));
-            if (isset($loaderArgs['path'])) {
-                $loaderArgs['path'] = $dirPath . $this->_lang;
-            }
+            $loaderArgs['path'] = $dirPath . $this->_lang;
             try {
-                $content = call_user_func_array(sprintf('%s::load', $loader), array_merge([$adapter], $loaderArgs));
+                $content = $loader::load($adapter, $loaderArgs['path']);
             } catch (\Exception $e) {
                 throw new TException(sprintf('i18n cannot be loaded: %s', $e->getMessage()));
             }
@@ -199,7 +197,7 @@ final class Translator
         /** @var InterpolatorInterface $interpolator */
         $interpolator = $interpolatorObj->newInstanceArgs($interpolatorArgs->toArray());
         return $this->_translations[$this->_lang] = new Handler\NativeArray($interpolator, array_merge(
-            ['content' => $content->toArray()], $handlerOptions ? $handlerOptions->toArray() : []
+            ['content' => $content->toArray()], $handlerOptions->toArray()
         ));
     }
 
@@ -211,7 +209,7 @@ final class Translator
     {
         $di = Di::getDefault();
         if ($di && $di->has('config')) {
-            /** @var Config $config */
+            /** @var ConfigInterface $config */
             $config = $di->getShared('config');
             if ($found = $config->path($path, [])) {
                 return $found->toArray();

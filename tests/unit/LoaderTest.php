@@ -1,6 +1,6 @@
 <?php
 
-namespace Phalcon\Tests\Unit;
+namespace Tests\Unit;
 
 use Codeception\Test\Unit;
 use Phalcon\I18n\Adapter\{ Json, Php, Yaml };

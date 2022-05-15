@@ -1,6 +1,6 @@
 <?php
 
-namespace Phalcon\Tests\Unit;
+namespace Tests\Unit;
 
 use Codeception\Test\Unit;
 use Phalcon\I18n\Translator;
@@ -12,7 +12,7 @@ class ConfigTest extends Unit
     public function testMustBeFunctionalWithConfigService(): void
     {
         $path = FIXTURES . DIRECTORY_SEPARATOR . 'locale';
-        $this->tester->addServiceToContainer('config', new \Phalcon\Config([
+        $this->tester->addServiceToContainer('config', new \Phalcon\Config\Config([
             'i18n' => [
                 'loader' => ['arguments' => ['path' => $path]],
             ],
@@ -42,7 +42,7 @@ class ConfigTest extends Unit
 
     public function testMustBeFunctionableWithWrongConfig(): void
     {
-        $this->tester->addServiceToContainer('config', new \Phalcon\Config());
+        $this->tester->addServiceToContainer('config', new \Phalcon\Config\Config());
 
         $translator = Translator::instance();
         $translator->initialize();

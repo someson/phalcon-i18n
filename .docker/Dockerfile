@@ -1,32 +1,36 @@
-FROM php:7.4-fpm-alpine3.13
+FROM php:8.0-fpm
 
-ENV PHALCON_VERSION=4.1.3 \
-    PHALCON_EXT_PATH=php7/64bits \
-    PSR_VERSION=1.2.0
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libzip-dev \
+    zip \
+    libssl-dev \
+    git \
+    libicu-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN apk update && rm -rf /var/cache/apk/*
-RUN apk add git \
-    && apk add --no-cache --virtual .persistent-deps libxml2-dev zip libzip-dev icu-libs
-
+ENV APCU_VERSION=5.1.21
 RUN set -xe \
-    && apk add --no-cache --virtual .build-deps $PHPIZE_DEPS icu-dev icu-libs \
-    && pecl install xdebug \
-    && docker-php-ext-enable xdebug \
+    && pecl install apcu-${APCU_VERSION} xdebug \
+    && docker-php-ext-enable xdebug apcu \
+    && docker-php-ext-configure pdo_mysql --with-pdo-mysql \
     && docker-php-ext-configure intl --enable-intl \
-    && docker-php-ext-install -j$(nproc) calendar intl zip \
-    && pecl clear-cache \
-    && apk del .build-deps \
-    && docker-php-source delete \
-    && rm -rf /tmp/* /var/cache/apk/*
+    && docker-php-ext-install -j$(nproc) \
+        zip \
+        calendar \
+        intl \
+        pdo_mysql \
+    && pecl clear-cache
 
+ENV PHALCON_VERSION=5.0.0beta3 \
+    PSR_VERSION=1.1.0
 RUN set -xe \
-    && curl -LO https://github.com/jbboehr/php-psr/archive/v${PSR_VERSION}.tar.gz \
+    && curl -LO https://github.com/jbboehr/php-psr/archive/refs/tags/v${PSR_VERSION}.tar.gz \
     && tar xzf ${PWD}/v${PSR_VERSION}.tar.gz \
     && curl -LO https://github.com/phalcon/cphalcon/archive/v${PHALCON_VERSION}.tar.gz \
     && tar xzf ${PWD}/v${PHALCON_VERSION}.tar.gz \
     && docker-php-ext-install -j $(getconf _NPROCESSORS_ONLN) \
         ${PWD}/php-psr-${PSR_VERSION} \
-        ${PWD}/cphalcon-${PHALCON_VERSION}/build/${PHALCON_EXT_PATH} \
+        ${PWD}/cphalcon-${PHALCON_VERSION}/build/phalcon \
     && rm -r \
         ${PWD}/v${PSR_VERSION}.tar.gz \
         ${PWD}/php-psr-${PSR_VERSION} \

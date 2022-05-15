@@ -5,7 +5,7 @@ namespace Phalcon\I18n\Interfaces;
 interface AdapterInterface
 {
     /**
-     * @return string[]
+     * @return array<int, string>
      */
     public static function getFileExtensions(): array;
 }

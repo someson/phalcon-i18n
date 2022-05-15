@@ -2,14 +2,14 @@
 
 namespace Phalcon\I18n\Interfaces;
 
-use Phalcon\Config as Collection;
+use Phalcon\Config\ConfigInterface;
 
 interface FileLoaderInterface
 {
     /**
-     * @param string $adapterClass
+     * @param string $adapterClass FQCN
      * @param string $dir
-     * @return Collection
+     * @return ConfigInterface
      */
-    public static function load(string $adapterClass, string $dir): Collection;
+    public static function load(string $adapterClass, string $dir): ConfigInterface;
 }

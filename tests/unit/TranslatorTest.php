@@ -1,6 +1,6 @@
 <?php
 
-namespace Phalcon\Tests\Unit;
+namespace Tests\Unit;
 
 use Codeception\Test\Unit;
 use Phalcon\I18n\Translator;
@@ -13,7 +13,7 @@ class TranslatorTest extends Unit
     protected function _before(): void
     {
         parent::_before();
-        $this->tester->addServiceToContainer('config', new \Phalcon\Config([
+        $this->tester->addServiceToContainer('config', new \Phalcon\Config\Config([
             'i18n' => [
                 'loader' => ['arguments' => ['path' => FIXTURES . DIRECTORY_SEPARATOR . 'locale']],
             ],

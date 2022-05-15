@@ -3,7 +3,8 @@
 namespace Phalcon\I18n\Loader;
 
 use DirectoryIterator;
-use Phalcon\Config as Collection;
+use Phalcon\Config\ConfigInterface;
+use Phalcon\Config\Config as Collection;
 use Phalcon\I18n\Interfaces\{ AdapterInterface, FileLoaderInterface };
 
 class Files implements FileLoaderInterface
@@ -11,7 +12,7 @@ class Files implements FileLoaderInterface
     /**
      * {@inheritDoc}
      */
-    public static function load(string $adapterClass, string $dir): Collection
+    public static function load(string $adapterClass, string $dir): ConfigInterface
     {
         $output = [];
         foreach (new DirectoryIterator($dir) as $file) {

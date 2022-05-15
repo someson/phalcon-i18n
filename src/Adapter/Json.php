@@ -3,7 +3,7 @@
 namespace Phalcon\I18n\Adapter;
 
 use LengthException;
-use Phalcon\Collection;
+use Phalcon\Support\Collection;
 use Phalcon\I18n\Interfaces\AdapterInterface;
 use UnexpectedValueException;
 

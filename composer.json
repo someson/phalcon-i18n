@@ -5,15 +5,15 @@
     "keywords": ["phalcon", "i18n", "translate"],
     "type": "library",
     "require": {
-        "php": ">=7.4",
+        "php": "8.0.*",
         "ext-json": "*",
-        "ext-phalcon": "~4.1"
+        "ext-phalcon": "5.0.0beta3"
     },
     "require-dev": {
         "codeception/codeception": "^4.1",
         "codeception/module-asserts": "^1.3",
-        "codeception/module-phalcon4": "^1.0",
-        "phalcon/ide-stubs": "^4.1",
+        "codeception/module-phalcon5": "^1.0",
+        "phalcon/ide-stubs": "v5.0.0-beta.3",
         "phpstan/phpstan": "^0.12"
     },
     "authors": [
@@ -32,7 +32,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Phalcon\\Tests\\Unit\\": "tests/unit/"
+            "Tests\\Unit\\": "tests/unit/"
         }
     }
 }

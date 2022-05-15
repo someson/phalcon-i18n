@@ -31,7 +31,7 @@ class NativeArray extends AbstractAdapter implements HandlerInterface
     {
         $this->_interpolator = $interpolator;
 
-        // as a fallback in order to use methods of AbstractAdapter. Components of factories almost unextendable :(
+        // as a fallback in order to use methods of AbstractAdapter. Components of factories almost unextenadable :(
         $interpolatorFactory = new InterpolatorFactory(['defaultInterpolator' => get_class($this->_interpolator)]);
         parent::__construct($interpolatorFactory, $options);
 
@@ -54,7 +54,7 @@ class NativeArray extends AbstractAdapter implements HandlerInterface
      * @param string $index
      * @return bool
      */
-    public function exists(string $index): bool
+    public function has(string $index): bool
     {
         $found = $this->_translate;
         foreach ($this->_shiftKeys as $key) {
@@ -69,7 +69,7 @@ class NativeArray extends AbstractAdapter implements HandlerInterface
     /**
      * list of keys ['a'] before actual main key ['b.c.d']
      * must be set if self::_shiftLevel > 0 (multidimensional array)
-     * @param array<int, string> $keys
+     * @param string $keys
      */
     public function shiftKeys(...$keys): void
     {
@@ -77,17 +77,17 @@ class NativeArray extends AbstractAdapter implements HandlerInterface
     }
 
     /**
-     * @param string $translateKey
+     * @param string $index
      * @param array<string, mixed> $placeholders
      * @return string
      */
-    public function query(string $translateKey, array $placeholders = []): string
+    public function query(string $index, array $placeholders = []): string
     {
         $found = $this->_translate;
         foreach ($this->_shiftKeys as $key) {
             $found = $found[$key];
         }
-        return $this->replacePlaceholders($found[$translateKey], $placeholders);
+        return $this->replacePlaceholders($found[$index], $placeholders);
     }
 
     /**

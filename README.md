@@ -1,10 +1,10 @@
 # Multi-lingual Support
 
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://choosealicense.com/licenses/mit/)
-[![CircleCI](https://circleci.com/gh/someson/phalcon-i18n/tree/4.1.svg?style=shield)](https://circleci.com/gh/someson/phalcon-i18n/tree/circleci-project-setup)
-[![codecov](https://codecov.io/gh/someson/phalcon-i18n/branch/4.1/graph/badge.svg?token=AW5T4WU56Q)](https://codecov.io/gh/someson/phalcon-i18n)
+[![CircleCI](https://circleci.com/gh/someson/phalcon-i18n/tree/5.0.svg?style=shield)](https://circleci.com/gh/someson/phalcon-i18n/tree/circleci-project-setup)
+[![codecov](https://codecov.io/gh/someson/phalcon-i18n/branch/5.0/graph/badge.svg?token=AW5T4WU56Q)](https://codecov.io/gh/someson/phalcon-i18n)
 
-Extending [Phalcon Framework v4 Translations Module](https://docs.phalcon.io/4.0/en/translate)
+Extending [Phalcon Framework v5 Translations Module](https://docs.phalcon.io/5.0/en/translate)
 
 ## Example
 
@@ -157,13 +157,13 @@ $ docker-compose exec php-service ./vendor/bin/codecept run unit [-vv]
 ```
 ```
 $ docker-compose exec php-service ./vendor/bin/codecept run --coverage 
-Codeception PHP Testing Framework v4.1.33
-Powered by PHPUnit 9.5.20 by Sebastian Bergmann and contributors.
+Codeception PHP Testing Framework v4.1.31 https://helpukrainewin.org
+Powered by PHPUnit 9.5.20 #StandWithUkraine
 
 Unit Tests (29) ----------------------------------------------------------
-✔ AdapterTest: Json found and initialized (0.27s)
-✔ AdapterTest: Json may throw exceptions (0.11s)
-✔ ConfigTest: Must be functional with config service (0.12s)
+✔ AdapterTest: Json found and initialized (0.23s)
+✔ AdapterTest: Json may throw exceptions (0.10s)
+✔ ConfigTest: Must be functional with config service (0.11s)
 ✔ ConfigTest: Must be functionable without config service (0.02s)
 ✔ ConfigTest: Must be functionable with wrong config (0.01s)
 ✔ DecoratorTest: No decoration (0.02s)
@@ -171,16 +171,16 @@ Unit Tests (29) ----------------------------------------------------------
 ✔ DecoratorTest: Decorate as html (0.02s)
 ✔ HandlerTest: Check keys shifting | #0 (0.01s)
 ✔ HandlerTest: Check keys shifting | #1 (0.01s)
-✔ HandlerTest: Check keys shifting | #2 (0.02s)
+✔ HandlerTest: Check keys shifting | #2 (0.01s)
 ✔ InterpolatorTest: Should handle default placeholders (0.00s)
 ✔ InterpolatorTest: Should handle custom placeholders (0.00s)
-✔ LoaderTest: Files loader | #0 (0.09s)
+✔ LoaderTest: Files loader | #0 (0.08s)
 ✔ LoaderTest: Files loader | #1 (0.02s)
 ✔ TranslatorTest: Fallback loaded (0.03s)
 ✔ TranslatorTest: Wrong fallback lang defined (0.01s)
 ✔ TranslatorTest: Default instance (0.01s)
-✔ TranslatorTest: Change language (0.01s)
-✔ TranslatorTest: Change scope (0.01s)
+✔ TranslatorTest: Change language (0.00s)
+✔ TranslatorTest: Change scope (0.00s)
 ✔ TranslatorTest: Changed scope should return a new collection (0.02s)
 ✔ TranslatorTest: Check if translation exists (0.03s)
 ✔ TranslatorTest: Plural (0.02s)
@@ -192,15 +192,15 @@ Unit Tests (29) ----------------------------------------------------------
 --------------------------------------------------------------------------
 
 
-Time: 1.33 seconds, Memory: 14.00 MB
+Time: 00:09.936, Memory: 26.00 MB
 
 OK (28 tests, 52 assertions)
 
 
 Code Coverage Report Summary:
-  Classes: 100.00% (6/8)
-  Methods: 100.00% (27/29)
-  Lines:   100.00% (140/148)                                              
+  Classes: 75.00% (6/8)
+  Methods: 93.10% (27/29)
+  Lines:   98.59% (140/142)
 ```
 
 For code coverage info run

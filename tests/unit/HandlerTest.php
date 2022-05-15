@@ -1,6 +1,6 @@
 <?php
 
-namespace Phalcon\Tests\Unit;
+namespace Tests\Unit;
 
 use Codeception\Test\Unit;
 use Phalcon\I18n\Adapter\Json;
@@ -31,6 +31,6 @@ class HandlerTest extends Unit
         if ($shiftLevel > 0) {
             call_user_func_array([$handler, 'shiftKeys'], $shiftKeys);
         }
-        self::assertTrue($handler->exists($tKey));
+        self::assertTrue($handler->has($tKey));
     }
 }
