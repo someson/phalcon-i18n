@@ -16,11 +16,11 @@ jobs:
             sudo pecl install xdebug
 
       - run:
-          name: Install Phalcon v5.0.0beta3
+          name: Install Phalcon v5.0.0RC1
           command: |
             sudo apt install gcc libpcre3-dev -y
             sudo pecl channel-update pecl.php.net
-            sudo pecl install phalcon-5.0.0beta3
+            sudo pecl install phalcon-5.0.0RC1
 
       - run: sudo composer selfupdate
       - restore_cache:
