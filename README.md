@@ -3,6 +3,7 @@
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://choosealicense.com/licenses/mit/)
 [![CircleCI](https://circleci.com/gh/someson/phalcon-i18n/tree/5.0.svg?style=shield)](https://circleci.com/gh/someson/phalcon-i18n/tree/circleci-project-setup)
 [![codecov](https://codecov.io/gh/someson/phalcon-i18n/branch/5.0/graph/badge.svg?token=AW5T4WU56Q)](https://codecov.io/gh/someson/phalcon-i18n)
+![Packagist Version (including pre-releases)](https://img.shields.io/packagist/v/someson/phalcon-i18n)
 
 Extending [Phalcon Framework v5 Translations Module](https://docs.phalcon.io/5.0/en/translate)
 
@@ -156,7 +157,7 @@ To run tests, run the following command:
 $ docker-compose exec php-service ./vendor/bin/codecept run unit [-vv] 
 ```
 ```
-$ docker-compose exec php-service ./vendor/bin/codecept run --coverage 
+$ docker-compose exec php-service ./vendor/bin/codecept run --coverage
 Codeception PHP Testing Framework v4.1.31 https://helpukrainewin.org
 Powered by PHPUnit 9.5.20 #StandWithUkraine
 
