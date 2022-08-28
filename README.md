@@ -3,6 +3,8 @@
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://choosealicense.com/licenses/mit/)
 [![CircleCI](https://circleci.com/gh/someson/phalcon-i18n/tree/4.1.svg?style=shield)](https://circleci.com/gh/someson/phalcon-i18n/tree/circleci-project-setup)
 [![codecov](https://codecov.io/gh/someson/phalcon-i18n/branch/4.1/graph/badge.svg?token=AW5T4WU56Q)](https://codecov.io/gh/someson/phalcon-i18n)
+[![Made in Ukraine](https://img.shields.io/badge/made_in-ukraine-ffd700.svg?labelColor=0057b7)](https://supportukrainenow.org/)
+[![Russian Warship Go Fuck Yourself](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/RussianWarship.svg)](https://stand-with-ukraine.pp.ua)
 
 Extending [Phalcon Framework v4 Translations Module](https://docs.phalcon.io/4.0/en/translate)
 
