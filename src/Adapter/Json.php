@@ -2,6 +2,7 @@
 
 namespace Phalcon\I18n\Adapter;
 
+use JsonException;
 use LengthException;
 use Phalcon\Support\Collection;
 use Phalcon\I18n\Interfaces\AdapterInterface;
@@ -11,7 +12,7 @@ class Json extends Collection implements AdapterInterface
 {
     /**
      * @param string $filePath
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function __construct(string $filePath)
     {
@@ -22,7 +23,7 @@ class Json extends Collection implements AdapterInterface
             throw new LengthException('Empty content');
         }
         $data = json_decode($content, true, 100, JSON_THROW_ON_ERROR);
-        parent::__construct($data, false);
+        parent::__construct((array) $data, false);
     }
 
     public static function getFileExtensions(): array

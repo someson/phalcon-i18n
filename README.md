@@ -153,65 +153,21 @@ return [
 
 [Codeception](https://codeception.com/) used
 
+```
+$ docker-compose exec i18n ./vendor/bin/codecept build 
+```
+
 To run tests, run the following command:
-
 ```
-$ docker-compose exec php-service ./vendor/bin/codecept run unit [-vv] 
-```
-```
-$ docker-compose exec php-service ./vendor/bin/codecept run --coverage
-Codeception PHP Testing Framework v4.1.31 https://helpukrainewin.org
-Powered by PHPUnit 9.5.20 #StandWithUkraine
-
-Unit Tests (29) ----------------------------------------------------------
-✔ AdapterTest: Json found and initialized (0.23s)
-✔ AdapterTest: Json may throw exceptions (0.10s)
-✔ ConfigTest: Must be functional with config service (0.11s)
-✔ ConfigTest: Must be functionable without config service (0.02s)
-✔ ConfigTest: Must be functionable with wrong config (0.01s)
-✔ DecoratorTest: No decoration (0.02s)
-✔ DecoratorTest: Decorate as text pattern (0.02s)
-✔ DecoratorTest: Decorate as html (0.02s)
-✔ HandlerTest: Check keys shifting | #0 (0.01s)
-✔ HandlerTest: Check keys shifting | #1 (0.01s)
-✔ HandlerTest: Check keys shifting | #2 (0.01s)
-✔ InterpolatorTest: Should handle default placeholders (0.00s)
-✔ InterpolatorTest: Should handle custom placeholders (0.00s)
-✔ LoaderTest: Files loader | #0 (0.08s)
-✔ LoaderTest: Files loader | #1 (0.02s)
-✔ TranslatorTest: Fallback loaded (0.03s)
-✔ TranslatorTest: Wrong fallback lang defined (0.01s)
-✔ TranslatorTest: Default instance (0.01s)
-✔ TranslatorTest: Change language (0.00s)
-✔ TranslatorTest: Change scope (0.00s)
-✔ TranslatorTest: Changed scope should return a new collection (0.02s)
-✔ TranslatorTest: Check if translation exists (0.03s)
-✔ TranslatorTest: Plural (0.02s)
-✔ TranslatorTest: Context (0.02s)
-✔ TranslatorTest: Missing translations (0.02s)
-✔ TranslatorTest: Simple translation without parameters (0.02s)
-✔ TranslatorTest: Simple translation with parameters (0.02s)
-✔ TranslatorTest: Translation with deeper level (0.02s)
---------------------------------------------------------------------------
-
-
-Time: 00:09.936, Memory: 26.00 MB
-
-OK (28 tests, 52 assertions)
-
-
-Code Coverage Report Summary:
-  Classes: 75.00% (6/8)
-  Methods: 93.10% (27/29)
-  Lines:   98.59% (140/142)
+$ docker-compose exec i18n ./vendor/bin/codecept run [-vv]
 ```
 
 For code coverage info run
 ```
-$ docker-compose exec php-service ./vendor/bin/codecept run --coverage --coverage-html
+$ docker-compose exec i18n ./vendor/bin/codecept run --coverage --coverage-html
 ```
 and open `tests/_output/coverage/index.html` in your browser
 
 ### Static analyzer
 
-`$ docker-compose exec php-service ./vendor/bin/phpstan analyse src --level max`
+`$ docker-compose exec i18n ./vendor/bin/phpstan analyse src --level max`

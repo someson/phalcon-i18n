@@ -10,7 +10,6 @@ use Phalcon\I18n\Interfaces\DecoratorInterface;
 use Phalcon\Translate\Exception as TException;
 use Phalcon\Translate\Interpolator\InterpolatorInterface;
 use ReflectionClass, ReflectionException, UnexpectedValueException;
-use function call_user_func_array;
 
 final class Translator
 {
@@ -81,8 +80,7 @@ final class Translator
      */
     public function getScope(string $name): array
     {
-        $allByLang = $this->_loadTranslations();
-        return $allByLang->getByScope($name) ?? [];
+        return $this->_loadTranslations()->getByScope($name);
     }
 
     public function setLang(string $lang): self
@@ -123,7 +121,7 @@ final class Translator
 
     /**
      * @param string $key 'scope:a.b.c'
-     * @param array<string, mixed> $params
+     * @param array<string, string> $params
      * @param bool $pluralize
      * @return string
      * @throws ReflectionException|TException

@@ -17,9 +17,8 @@ class AssocArray implements InterpolatorInterface, PlaceholderInterface
 
     /**
      * Replaces placeholders by the values passed
-     *
      * @param string $translation
-     * @param array<string, mixed> $placeholders
+     * @param array<string, string|array> $placeholders
      * @return string
      */
     public function replacePlaceholders(string $translation, array $placeholders = []): string

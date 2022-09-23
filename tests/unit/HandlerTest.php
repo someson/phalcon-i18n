@@ -7,9 +7,12 @@ use Phalcon\I18n\Adapter\Json;
 use Phalcon\I18n\Handler\NativeArray;
 use Phalcon\I18n\Interpolator\AssocArray;
 use Phalcon\I18n\Loader\Files;
+use Phalcon\Translate\Exception;
 
 class HandlerTest extends Unit
 {
+    protected \UnitTester $tester;
+
     public function getShiftVariants(): array
     {
         return [
@@ -32,5 +35,12 @@ class HandlerTest extends Unit
             call_user_func_array([$handler, 'shiftKeys'], $shiftKeys);
         }
         self::assertTrue($handler->has($tKey));
+    }
+
+    public function testMayThrowException(): void
+    {
+        $this->tester->expectThrowable(new Exception('Translation content was not provided'), function() {
+            new NativeArray(new AssocArray('{{', '}}'), []);
+        });
     }
 }
