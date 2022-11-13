@@ -9,6 +9,6 @@ services:
         env_file:
             - ./.docker/.php.env
         volumes:
-            - .:/var/www/html:cached
+            - .:/var/www:cached
             - ~/composer:/root/.composer
         tty: true

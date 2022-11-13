@@ -4,9 +4,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     libzip-dev \
     libyaml-dev \
-    zip \
     libssl-dev \
     libicu-dev \
+    zip \
+    unzip \
     && rm -rf /var/lib/apt/lists/*
 
 ADD https://raw.githubusercontent.com/mlocati/docker-php-extension-installer/master/install-php-extensions /usr/local/bin/
@@ -19,7 +20,7 @@ RUN set -xe \
     && docker-php-ext-install -j$(nproc) zip calendar intl pdo_mysql \
     && pecl clear-cache
 
-ENV PHALCON_VERSION=5.0.0 \
+ENV PHALCON_VERSION=5.1.1 \
     PSR_VERSION=1.1.0
 
 RUN set -xe \
@@ -41,4 +42,4 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 COPY php.ini /usr/local/etc/php/conf.d/php-override.ini
 RUN touch /var/log/remote.log && chmod 666 /var/log/remote.log
 
-WORKDIR /var/www/html
+WORKDIR /var/www

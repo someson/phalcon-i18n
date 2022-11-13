@@ -9,6 +9,12 @@
 
 Extending [Phalcon Framework v5 Translations Module](https://docs.phalcon.io/5.0/en/translate)
 
+## Install
+
+```bash
+$ composer require someson/phalcon-18n
+```
+
 ## Example
 
 e.g. `login.json` File:

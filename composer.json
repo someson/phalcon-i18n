@@ -5,7 +5,7 @@
     "keywords": ["phalcon", "i18n", "translate"],
     "type": "library",
     "require": {
-        "php": "8.0.*",
+        "php": "^8.0",
         "ext-json": "*",
         "ext-phalcon": "^5.0"
     },
