@@ -12,7 +12,7 @@ Extending [Phalcon Framework v5 Translations Module](https://docs.phalcon.io/5.0
 ## Install
 
 ```bash
-$ composer require someson/phalcon-18n
+$ composer require someson/phalcon-i18n
 ```
 
 ## Example
