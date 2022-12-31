@@ -160,7 +160,7 @@ return [
 [Codeception](https://codeception.com/) used
 
 ```
-$ docker-compose exec i18n ./vendor/bin/codecept build 
+$ docker-compose exec i18n ./vendor/bin/codecept build
 ```
 
 To run tests, run the following command:

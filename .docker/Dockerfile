@@ -1,4 +1,4 @@
-FROM php:8.0-fpm
+FROM php:8.1-fpm
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
@@ -13,14 +13,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 ADD https://raw.githubusercontent.com/mlocati/docker-php-extension-installer/master/install-php-extensions /usr/local/bin/
 RUN chmod uga+x /usr/local/bin/install-php-extensions && sync && install-php-extensions yaml
 
-ENV APCU_VERSION=5.1.21
+ENV APCU_VERSION=5.1.22
 RUN set -xe \
     && pecl install xdebug apcu-${APCU_VERSION} \
     && docker-php-ext-enable xdebug apcu \
     && docker-php-ext-install -j$(nproc) zip calendar intl pdo_mysql \
     && pecl clear-cache
 
-ENV PHALCON_VERSION=5.1.1 \
+ENV PHALCON_VERSION=5.1.3 \
     PSR_VERSION=1.1.0
 
 RUN set -xe \

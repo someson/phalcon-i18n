@@ -5,7 +5,7 @@
     "keywords": ["phalcon", "i18n", "translate"],
     "type": "library",
     "require": {
-        "php": "^8.0",
+        "php": "^8.0|^8.1",
         "ext-json": "*",
         "ext-phalcon": "^5.0"
     },
@@ -13,7 +13,7 @@
         "codeception/codeception": "^5.0",
         "codeception/module-asserts": "^3.0",
         "codeception/module-phalcon5": "^2.0",
-        "phalcon/ide-stubs": "^v5.0",
+        "phalcon/ide-stubs": "^v5.1",
         "phpstan/phpstan": "^1.8"
     },
     "authors": [
