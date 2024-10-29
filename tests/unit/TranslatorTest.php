@@ -39,6 +39,8 @@ class TranslatorTest extends Unit
 
         $reflection = new \ReflectionClass($this->translator);
         $langProperty = $reflection->getProperty('_lang');
+        $langProperty->setAccessible(true);
+
         self::assertSame($langProperty->getValue($this->translator), 'en');
     }
 
@@ -65,6 +67,8 @@ class TranslatorTest extends Unit
 
         $reflection = new \ReflectionClass($this->translator);
         $langProperty = $reflection->getProperty('_lang');
+        $langProperty->setAccessible(true);
+
         self::assertSame($langProperty->getValue($this->translator), 'de');
     }
 
@@ -74,6 +78,8 @@ class TranslatorTest extends Unit
 
         $reflection = new \ReflectionClass($this->translator);
         $langProperty = $reflection->getProperty('_lang');
+        $langProperty->setAccessible(true);
+
         self::assertSame($langProperty->getValue($this->translator), 'en');
     }
 
