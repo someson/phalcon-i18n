@@ -1,6 +1,6 @@
 # Multi-lingual Support
 
-[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://choosealicense.com/licenses/mit/)
+![GitHub License](https://img.shields.io/github/license/someson/phalcon-i18n)
 [![CircleCI](https://circleci.com/gh/someson/phalcon-i18n/tree/5.0.svg?style=shield)](https://circleci.com/gh/someson/phalcon-i18n/tree/circleci-project-setup)
 [![codecov](https://codecov.io/gh/someson/phalcon-i18n/branch/5.0/graph/badge.svg?token=AW5T4WU56Q)](https://codecov.io/gh/someson/phalcon-i18n)
 ![Packagist Version (including pre-releases)](https://img.shields.io/packagist/v/someson/phalcon-i18n)

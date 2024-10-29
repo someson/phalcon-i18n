@@ -24,7 +24,9 @@ final class Translator
     /** @var array<string, int> */
     private array $_missingTranslations;
 
-    private function __clone() {}
+    /**
+     * @throws Exception
+     */
     private function __construct()
     {
         $this->initialize();
@@ -214,5 +216,10 @@ final class Translator
             }
         }
         return [];
+    }
+
+    public function __clone()
+    {
+        throw new \BadMethodCallException('Cannot clone singleton');
     }
 }

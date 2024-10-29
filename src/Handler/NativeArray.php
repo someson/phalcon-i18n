@@ -77,17 +77,17 @@ class NativeArray extends AbstractAdapter implements HandlerInterface
     }
 
     /**
-     * @param string $index
+     * @param string $translateKey
      * @param array<string, mixed> $placeholders
      * @return string
      */
-    public function query(string $index, array $placeholders = []): string
+    public function query(string $translateKey, array $placeholders = []): string
     {
         $found = $this->_translate;
         foreach ($this->_shiftKeys as $key) {
             $found = $found[$key];
         }
-        return $this->replacePlaceholders($found[$index], $placeholders);
+        return $this->replacePlaceholders($found[$translateKey], $placeholders);
     }
 
     /**

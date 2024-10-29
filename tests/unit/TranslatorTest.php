@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use Codeception\Test\Unit;
+use Phalcon\Config\Exception;
 use Phalcon\I18n\Translator;
 
 class TranslatorTest extends Unit
@@ -10,6 +11,9 @@ class TranslatorTest extends Unit
     protected Translator $translator;
     protected \UnitTester $tester;
 
+    /**
+     * @throws Exception
+     */
     protected function _before(): void
     {
         parent::_before();
@@ -35,7 +39,6 @@ class TranslatorTest extends Unit
 
         $reflection = new \ReflectionClass($this->translator);
         $langProperty = $reflection->getProperty('_lang');
-        $langProperty->setAccessible(true);
         self::assertSame($langProperty->getValue($this->translator), 'en');
     }
 
@@ -49,13 +52,19 @@ class TranslatorTest extends Unit
         });
     }
 
+    public function testSingletonRestrictions(): void
+    {
+        $this->tester->expectThrowable(\BadMethodCallException::class, function() {
+            $cloned = clone $this->translator;
+        });
+    }
+
     public function testDefaultInstance(): void
     {
         self::assertSame($this->translator->getScopeName(), 'global');
 
         $reflection = new \ReflectionClass($this->translator);
         $langProperty = $reflection->getProperty('_lang');
-        $langProperty->setAccessible(true);
         self::assertSame($langProperty->getValue($this->translator), 'de');
     }
 
@@ -65,7 +74,6 @@ class TranslatorTest extends Unit
 
         $reflection = new \ReflectionClass($this->translator);
         $langProperty = $reflection->getProperty('_lang');
-        $langProperty->setAccessible(true);
         self::assertSame($langProperty->getValue($this->translator), 'en');
     }
 
